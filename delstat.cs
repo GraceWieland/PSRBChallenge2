@@ -130,7 +130,7 @@ namespace GoinPostal
 					}
 
 				}
-				Console.WriteLine("100");
+				Console.WriteLine("!");
 			}
 		}
 	}
