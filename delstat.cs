@@ -83,7 +83,7 @@ namespace GoinPostal
 			Int32 rowsEst = vals / 309;
 			rowsEst = rowsEst / 10;
 			Int32 index = 309;
-			using (System.IO.StreamWriter sw = new System.IO.StreamWriter(outputDestination))
+			using (System.IO.StreamWriter sw = new System.IO.StreamWriter(new System.IO.FileStream(outputDestination,System.IO.FileMode.CreateNew)))
 			{
 				string header = "";
 				foreach (KeyValuePair<string, int> kvp in breaks)

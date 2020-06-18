@@ -86,7 +86,7 @@ namespace GoinPostal
 				if (!System.IO.File.Exists(output))
 				{
 
-					using (System.IO.StreamReader sr = new System.IO.StreamReader(input))
+					using (System.IO.StreamReader sr = new System.IO.StreamReader(new System.IO.FileStream(input,System.IO.FileMode.Open)))
 					{
 						delstat d = new delstat();
 						d.ConvertToCSV(sr.ReadLine(), output);
