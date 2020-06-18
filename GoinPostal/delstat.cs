@@ -77,25 +77,54 @@ namespace GoinPostal
 			breaks.Add("Preferred Last Line City State Key", 6);
 
 		}
-		public void Parse(string inputstring)
+		public void ConvertToCSV(string inputstring, string outputDestination)
 		{
 			Int32 vals = inputstring.Length - 309;
+			Int32 rowsEst = vals / 309;
+			rowsEst = rowsEst / 10;
 			Int32 index = 309;
-			List<row> rows = new List<row>();
-			while (vals > 0)
+			using (System.IO.StreamWriter sw = new System.IO.StreamWriter(outputDestination))
 			{
-				List<string> r = new List<string>();
+				string header = "";
 				foreach (KeyValuePair<string, int> kvp in breaks)
 				{
-					r.Add(inputstring.Substring(index, kvp.Value));
-					index += kvp.Value;
-					vals -= kvp.Value;
+					header += kvp.Key + ",";
 				}
-				row rr = new row(r);
-				rows.Add(rr);
-				Console.WriteLine(rr.ToCSV());
+				header.TrimEnd(new char[] { ',' });
+				sw.WriteLine(header);
+				int counter = 0;
+				int groupsComplete = 0;
+				Console.Write("Percent Complete: 0 ");
+				while (vals > 0)
+				{
+					List<string> r = new List<string>();
+					if ("d".Equals(inputstring.Substring(index, 1).ToLower()))
+					{
+						index += 1;
+						vals -= 1;
+					}
+					else
+					{
+						return;
+					}
+					foreach (KeyValuePair<string, int> kvp in breaks)
+					{
+						r.Add(inputstring.Substring(index, kvp.Value));
+						index += kvp.Value;
+						vals -= kvp.Value;
+					}
+					row rr = new row(r);
+					sw.Write(rr.ToCSV());
+					counter += 1;
+					if (counter % rowsEst == 0)
+					{
+						groupsComplete += 1;
+						Console.Write((groupsComplete * 10) + " " );
+					}
+
+				}
+				Console.WriteLine("100");
 			}
-			Console.WriteLine(rows.Count + " rows processed");
 		}
 	}
 }

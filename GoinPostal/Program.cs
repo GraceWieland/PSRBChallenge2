@@ -63,7 +63,10 @@ namespace GoinPostal
 					Console.WriteLine("FILE");
 					Console.WriteLine("Input " + args[1] );
 					Console.WriteLine("Output " + args[2]);
-					readFile(args[1]);
+					if (convertFile(args[1], args[2]))
+					{
+						Console.WriteLine("Completed");
+					}
 					return;
 				case Options.h:
 					Console.WriteLine(help);
@@ -76,12 +79,30 @@ namespace GoinPostal
 
 			}
 		}
-		public static void readFile(string input)
+		public static bool convertFile(string input, string output)
 		{
-			using (System.IO.StreamReader sr = new System.IO.StreamReader(input))
+			if (System.IO.File.Exists(input))
 			{
-				delstat d = new delstat();
-				d.Parse(sr.ReadLine());
+				if (!System.IO.File.Exists(output))
+				{
+
+					using (System.IO.StreamReader sr = new System.IO.StreamReader(input))
+					{
+						delstat d = new delstat();
+						d.ConvertToCSV(sr.ReadLine(), output);
+					}
+				}
+				else
+				{
+					Console.Write("Destination file already existed aborting");
+					return false;
+				}
+				return true;
+			}
+			else
+			{
+				Console.WriteLine("could not find input file");
+				return false;
 			}
 		}
 
