@@ -109,7 +109,14 @@ namespace GoinPostal
 					}
 					foreach (KeyValuePair<string, int> kvp in breaks)
 					{
-						r.Add(inputstring.Substring(index, kvp.Value));
+						if (kvp.Value.Equals("ZipCode"))
+						{
+							r.Add("'"+inputstring.Substring(index, kvp.Value));
+						}
+						else
+						{
+							r.Add(inputstring.Substring(index, kvp.Value));
+						}
 						index += kvp.Value;
 						vals -= kvp.Value;
 					}
