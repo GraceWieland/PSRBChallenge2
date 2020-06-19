@@ -7,8 +7,4 @@
     <StartupObject>GoinPostal.Program</StartupObject>
   </PropertyGroup>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="/t:Restore" />
-  </Target>
-
 </Project>
