@@ -9,4 +9,4 @@ The program should run and provide progress reporting and summarize your inputs.
 
 ![](images/FileInProgress.jpg "What you should expect to see during a compute.")
 
-[Download EXE here](https://drive.hecdev.net/share/UwtFQiB1)
+[Download here](https://ci.appveyor.com/api/buildjobs/8nbvgxdb90jpajip/artifacts/bin%2FDebug%2Fnetstandard1.4%2FGoinPostal.dll)
