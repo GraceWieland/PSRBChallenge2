@@ -4,26 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GoinPostal
+namespace CtySt
 {
-	class delstat
+	class ctystate
 	{
 		private Dictionary<string, int> breaks;//header, length
 
-		public delstat()
+		public ctystate()
 		{
 			breaks = new Dictionary<string, int>();
-			breaks.Add("ZipCode", 5);
-			breaks.Add("UpdateKeyNumber", 10);
-			breaks.Add("ActionCode", 1);
-			breaks.Add("CarrierRouteID", 4);
-			breaks.Add("Centralized Count", 5);
-			breaks.Add("Curb Count", 5);
-			breaks.Add("NDCBU Count", 5);
-			breaks.Add("Other Count", 5);
-			breaks.Add("Facility Box Count", 5);
-			breaks.Add("Contract Box Count", 5);
-			breaks.Add("Detached Box Count", 5);
+			breaks.Add("Filler", 5);
+			breaks.Add("Copyright Statement", 12);
+			breaks.Add("Filler", 1);
+			breaks.Add("File Version Month", 2);
+			breaks.Add("Dash", 1);
+			breaks.Add("File Version Year", 2);
+			breaks.Add("Dash", 1);
+			breaks.Add("Copyright Owner", 4);
+			breaks.Add("Filler", 1);
+			breaks.Add("Volume Sequence Number", 3);
+			breaks.Add("Filler", 96);
 			breaks.Add("NPU Count", 5);
 			breaks.Add("Caller Service Box Count", 5);
 			breaks.Add("Remittance Box Count", 5);
