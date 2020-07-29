@@ -1,0 +1,93 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CtySt
+{
+	class ctystate
+	{
+		private Dictionary<string, int> breaks;//header, length
+
+		public ctystate()
+		{
+			breaks = new Dictionary<string, int>();
+			breaks.Add("Zip Code", 5);
+			breaks.Add("Alias Street Pre Drctn Abbrev", 2);
+			breaks.Add("Alias Street Name", 28);
+			breaks.Add("Alias Street Suffix Abbrev", 4);
+			breaks.Add("Alias Street Post Drctn Abbrev", 2);
+			breaks.Add("Street Pre Drctn Abbrev", 2);
+			breaks.Add("Street Name", 28);
+			breaks.Add("Street Suffix Abbrev", 4);
+			breaks.Add("Street Post Drctn Abbrev", 2);
+			breaks.Add("Alias Type Code", 1);
+			breaks.Add("ALias Century", 2);
+			breaks.Add("Alias Year", 2);
+			breaks.Add("Alias Month", 2);
+			breaks.Add("Alias Day", 2);
+			breaks.Add("Delivery Address Low No", 10);
+			breaks.Add("Delivery Address High No", 10);
+			breaks.Add("Alias Range Odd Even Code", 1);
+			breaks.Add("Filler", 21);
+
+		}
+		public void ConvertToCSV(string inputstring, string outputDestination)
+		{
+			Int32 vals = inputstring.Length - 129;
+			Int32 rowsEst = vals / 129;
+			rowsEst = rowsEst / 10;
+			Int32 index = 129;
+			using (System.IO.StreamWriter sw = new System.IO.StreamWriter(new System.IO.FileStream(outputDestination,System.IO.FileMode.CreateNew)))
+			{
+				string header = "";
+				foreach (KeyValuePair<string, int> kvp in breaks)
+				{
+					header += kvp.Key + ",";
+				}
+				header.TrimEnd(new char[] { ',' });
+				sw.WriteLine(header);
+				int counter = 0;
+				int groupsComplete = 0;
+				Console.Write("Percent Complete: 0 ");
+				while (vals > 0)
+				{
+					List<string> r = new List<string>();
+					if ("d".Equals(inputstring.Substring(index, 1).ToLower()))
+					{
+						index += 1;
+						vals -= 1;
+					}
+					else
+					{
+						return;
+					}
+					foreach (KeyValuePair<string, int> kvp in breaks)
+					{
+						if (kvp.Value.Equals("ZipCode"))
+						{
+							r.Add("'"+inputstring.Substring(index, kvp.Value));
+						}
+						else
+						{
+							r.Add(inputstring.Substring(index, kvp.Value));
+						}
+						index += kvp.Value;
+						vals -= kvp.Value;
+					}
+					row rr = new row(r);
+					sw.Write(rr.ToCSV());
+					counter += 1;
+					if (counter % rowsEst == 0)
+					{
+						groupsComplete += 1;
+						Console.Write((groupsComplete * 10) + " " );
+					}
+
+				}
+				Console.WriteLine("!");
+			}
+		}
+	}
+}
